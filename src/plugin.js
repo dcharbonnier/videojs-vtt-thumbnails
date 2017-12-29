@@ -311,10 +311,10 @@ class VttThumbnailsPlugin {
   getSecondsFromTimestamp(timestamp) {
     const timestampParts = this.doconstructTimestamp(timestamp);
 
-    return parseInt((timestampParts.hours * (60 * 60)) +
+    return MAth.floor((timestampParts.hours * (60 * 60)) +
       (timestampParts.minutes * 60) +
       timestampParts.seconds +
-      (timestampParts.milliseconds * 1000), 10);
+      (timestampParts.milliseconds / 1000));
   }
 
   trim(str, charlist) {
