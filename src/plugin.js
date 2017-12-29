@@ -1,7 +1,6 @@
 import videojs from 'video.js';
 import window from 'global/window';
 import document from 'global/document';
-import XMLHttpRequest from 'global/document';
 import {version as VERSION} from '../package.json';
 
 // Default options for the plugin.
@@ -103,7 +102,7 @@ class VttThumbnailsPlugin {
    */
   getVttFile(url) {
     return new Promise((resolve, reject) => {
-      const req = new XMLHttpRequest();
+      const req = new videojs.xhr();
 
       req.data = {
         resolve
