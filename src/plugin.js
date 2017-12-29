@@ -7,7 +7,6 @@ const defaults = {}
 
 // Cross-compatibility for Video.js 5 and 6.
 const registerPlugin = videojs.registerPlugin || videojs.plugin
-// const dom = videojs.dom || videojs;
 
 /**
  * Function to invoke when the player is ready.
@@ -173,7 +172,7 @@ class vttThumbnailsPlugin {
 
   onBarMousemove (event) {
     this.updateThumbnailStyle(
-      event.clientX - this.progressBar.offsetLeft,
+      videojs.dom.getPointerPosition(this.progressBar, event).x,
       this.progressBar.offsetWidth
     )
   }
@@ -195,14 +194,14 @@ class vttThumbnailsPlugin {
     this.thumbnailHolder.style.opacity = '0'
   }
 
-  updateThumbnailStyle (x, width) {
+  updateThumbnailStyle (percent, width) {
     const duration = this.player.duration()
-    const time = ((1 - ((width - x) / width))) * duration
+    const time = percent * duration
     const currentStyle = this.getStyleForTime(time)
     if (!currentStyle) {
       return this.hideThumbnailHolder()
     }
-    const xPos = ((1 - ((width - x) / width))) * width
+    const xPos = percent * width
     this.thumbnailHolder.style.transform = 'translateX(' + xPos + 'px)'
     this.thumbnailHolder.style.marginLeft = '-' + (parseInt(currentStyle.width) / 2) + 'px'
 
