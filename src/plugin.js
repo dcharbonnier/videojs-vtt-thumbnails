@@ -1,6 +1,8 @@
 import videojs from 'video.js';
+import window from 'global/window';
+import document from 'global/document';
+import XMLHttpRequest from 'global/document';
 import {version as VERSION} from '../package.json';
-// import request from 'request';
 
 // Default options for the plugin.
 const defaults = {};
