@@ -63,12 +63,12 @@ var VttThumbnailsPlugin = function () {
     var _this = this;
 
     this.progressBar.removeEventListener('mouseenter', function () {
-      return _this.onBarMouseenter();
+      return _this.onBarMouseEnter();
     });
     this.progressBar.removeEventListener('mouseleave', function () {
-      return _this.onBarMouseleave();
+      return _this.onBarMouseLeave();
     });
-    this.progressBar.removeEventListener('mousemove', this.onBarMousemove);
+    this.progressBar.removeEventListener('mousemove', this.onBarMouseMove);
     delete this.progressBar;
     delete this.vttData;
     delete this.thumbnailHolder;
@@ -143,29 +143,29 @@ var VttThumbnailsPlugin = function () {
     mouseDisplay.classList.add('vjs-hidden');
 
     this.progressBar.addEventListener('mouseenter', function () {
-      return _this3.onBarMouseenter();
+      return _this3.onBarMouseEnter();
     });
     this.progressBar.addEventListener('mouseleave', function () {
-      return _this3.onBarMouseleave();
+      return _this3.onBarMouseLeave();
     });
   };
 
-  VttThumbnailsPlugin.prototype.onBarMouseenter = function onBarMouseenter() {
+  VttThumbnailsPlugin.prototype.onBarMouseEnter = function onBarMouseEnter() {
     var _this4 = this;
 
     this.mouseMoveCallback = function (e) {
-      _this4.onBarMousemove(e);
+      _this4.onBarMouseMove(e);
     };
     this.progressBar.addEventListener('mousemove', this.mouseMoveCallback);
     this.showThumbnailHolder();
   };
 
-  VttThumbnailsPlugin.prototype.onBarMouseleave = function onBarMouseleave() {
+  VttThumbnailsPlugin.prototype.onBarMouseLeave = function onBarMouseLeave() {
     this.progressBar.removeEventListener('mousemove', this.mouseMoveCallback);
     this.hideThumbnailHolder();
   };
 
-  VttThumbnailsPlugin.prototype.onBarMousemove = function onBarMousemove(event) {
+  VttThumbnailsPlugin.prototype.onBarMouseMove = function onBarMouseMove(event) {
     this.updateThumbnailStyle(videojs.dom.getPointerPosition(this.progressBar, event).x, this.progressBar.offsetWidth);
   };
 
@@ -318,7 +318,7 @@ var VttThumbnailsPlugin = function () {
   VttThumbnailsPlugin.prototype.getSecondsFromTimestamp = function getSecondsFromTimestamp(timestamp) {
     var timestampParts = this.doconstructTimestamp(timestamp);
 
-    return parseInt(timestampParts.hours * (60 * 60) + timestampParts.minutes * 60 + timestampParts.seconds + timestampParts.milliseconds * 1000, 10);
+    return Math.floor(timestampParts.hours * (60 * 60) + timestampParts.minutes * 60 + timestampParts.seconds + timestampParts.milliseconds / 1000);
   };
 
   VttThumbnailsPlugin.prototype.trim = function trim(str, charlist) {

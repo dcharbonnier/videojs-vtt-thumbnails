@@ -311,7 +311,7 @@ class VttThumbnailsPlugin {
   getSecondsFromTimestamp(timestamp) {
     const timestampParts = this.doconstructTimestamp(timestamp);
 
-    return MAth.floor((timestampParts.hours * (60 * 60)) +
+    return Math.floor((timestampParts.hours * (60 * 60)) +
       (timestampParts.minutes * 60) +
       timestampParts.seconds +
       (timestampParts.milliseconds / 1000));
