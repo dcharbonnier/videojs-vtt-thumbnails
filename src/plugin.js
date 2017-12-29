@@ -181,7 +181,7 @@ class VttThumbnailsPlugin {
 
     this.thumbnailHolder.style.transform = 'translateX(' + xPos + 'px)';
     this.thumbnailHolder.style.marginLeft =
-      '-' + (Math.floor(currentStyle.width) / 2) + 'px';
+      '-' + (parseInt(currentStyle.width, 10) / 2) + 'px';
 
     if (this.lastStyle && this.lastStyle === currentStyle) {
       return;
