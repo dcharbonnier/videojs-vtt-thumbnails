@@ -16,7 +16,7 @@ const registerPlugin = videojs.registerPlugin || videojs.plugin;
  * This class performs all functions related to displaying the vtt
  * thumbnails.
  */
-class vttThumbnailsPlugin {
+class VttThumbnailsPlugin {
 
   /**
    * Plugin class constructor, called by videojs on
@@ -81,6 +81,7 @@ class vttThumbnailsPlugin {
    * Builds a base URL should we require one.
    *
    * @return {string}
+   *         The current browser base url
    */
   getBaseUrl() {
     return [
@@ -95,8 +96,10 @@ class vttThumbnailsPlugin {
   /**
    * Grabs the contents of the VTT file.
    *
-   * @param url
+   * @param {string} url
+   *        The url of vtt file to load.
    * @return {Promise}
+   *         Resolve with the vtt file content
    */
   getVttFile(url) {
     return new Promise((resolve, reject) => {
@@ -206,7 +209,10 @@ class vttThumbnailsPlugin {
     const vttDefinitions = data.split(/[\r\n][\r\n]/i);
 
     vttDefinitions.forEach((vttDef) => {
-      if (vttDef.match(/([0-9]{2}:)?([0-9]{2}:)?[0-9]{2}(.[0-9]{3})?( ?--> ?)([0-9]{2}:)?([0-9]{2}:)?[0-9]{2}(.[0-9]{3})?[\r\n]{1}.*/gi)) {
+      if (vttDef.match(new RegExp('([0-9]{2}:)?([0-9]{2}:)?' +
+          '[0-9]{2}(.[0-9]{3})?( ?--> ?)' +
+          '([0-9]{2}:)?([0-9]{2}:)?' +
+          '[0-9]{2}(.[0-9]{3})?[\r\n]{1}.*', 'gi'))) {
         const vttDefSplit = vttDef.split(/[\r\n]/i);
         const vttTiming = vttDefSplit[0];
         const vttTimingSplit = vttTiming.split(/ ?--> ?/i);
@@ -388,7 +394,7 @@ class vttThumbnailsPlugin {
  */
 const onPlayerReady = (player, options) => {
   player.addClass('vjs-vtt-thumbnails');
-  player.vttThumbnails = new vttThumbnailsPlugin(player, options);
+  player.vttThumbnails = new VttThumbnailsPlugin(player, options);
 };
 
 /**
