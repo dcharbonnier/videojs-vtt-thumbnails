@@ -180,8 +180,8 @@ class VttThumbnailsPlugin {
     const xPos = percent * width;
 
     this.thumbnailHolder.style.transform = 'translateX(' + xPos + 'px)';
-    this.thumbnailHolder.style
-      .marginLeft = '-' + (Math.floor(currentStyle.width) / 2) + 'px';
+    this.thumbnailHolder.style.marginLeft =
+      '-' + (Math.floor(currentStyle.width) / 2) + 'px';
 
     if (this.lastStyle && this.lastStyle === currentStyle) {
       return;
