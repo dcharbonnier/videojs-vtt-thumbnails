@@ -5,7 +5,6 @@ import {version as VERSION} from '../package.json';
 
 // Default options for the plugin.
 const defaults = {};
-const Xhr = videojs.xhr;
 
 // Cross-compatibility for Video.js 5 and 6.
 const registerPlugin = videojs.registerPlugin || videojs.plugin;
@@ -103,22 +102,14 @@ class VttThumbnailsPlugin {
    */
   getVttFile(url) {
     return new Promise((resolve, reject) => {
-      const req = new Xhr();
-
-      req.data = {
-        resolve
-      };
-      req.addEventListener('load', this.vttFileLoaded);
-      req.open('GET', url);
-      req.send();
+      videojs.xhr(url, (err, resp, body) => {
+        if (err) {
+          resolve(null);
+        } else {
+          resolve(body);
+        }
+      });
     });
-  }
-
-  /**
-   * Callback for loaded VTT file.
-   */
-  vttFileLoaded() {
-    this.data.resolve(this.responseText);
   }
 
   setupThumbnailElement(data) {

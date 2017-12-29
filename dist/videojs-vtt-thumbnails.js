@@ -65,7 +65,6 @@ var classCallCheck = function (instance, Constructor) {
 
 // Default options for the plugin.
 var defaults = {};
-var Xhr = videojs.xhr;
 
 // Cross-compatibility for Video.js 5 and 6.
 var registerPlugin = videojs.registerPlugin || videojs.plugin;
@@ -168,31 +167,19 @@ var VttThumbnailsPlugin = function () {
 
 
   VttThumbnailsPlugin.prototype.getVttFile = function getVttFile(url) {
-    var _this3 = this;
-
     return new Promise(function (resolve, reject) {
-      var req = new Xhr();
-
-      req.data = {
-        resolve: resolve
-      };
-      req.addEventListener('load', _this3.vttFileLoaded);
-      req.open('GET', url);
-      req.send();
+      videojs.xhr(url, function (err, resp, body) {
+        if (err) {
+          resolve(null);
+        } else {
+          resolve(body);
+        }
+      });
     });
   };
 
-  /**
-   * Callback for loaded VTT file.
-   */
-
-
-  VttThumbnailsPlugin.prototype.vttFileLoaded = function vttFileLoaded() {
-    this.data.resolve(this.responseText);
-  };
-
   VttThumbnailsPlugin.prototype.setupThumbnailElement = function setupThumbnailElement(data) {
-    var _this4 = this;
+    var _this3 = this;
 
     var mouseDisplay = this.player.$('.vjs-mouse-display');
     var thumbHolder = document_1.createElement('div');
@@ -205,18 +192,18 @@ var VttThumbnailsPlugin = function () {
     mouseDisplay.classList.add('vjs-hidden');
 
     this.progressBar.addEventListener('mouseenter', function () {
-      return _this4.onBarMouseenter();
+      return _this3.onBarMouseenter();
     });
     this.progressBar.addEventListener('mouseleave', function () {
-      return _this4.onBarMouseleave();
+      return _this3.onBarMouseleave();
     });
   };
 
   VttThumbnailsPlugin.prototype.onBarMouseenter = function onBarMouseenter() {
-    var _this5 = this;
+    var _this4 = this;
 
     this.mouseMoveCallback = function (e) {
-      _this5.onBarMousemove(e);
+      _this4.onBarMousemove(e);
     };
     this.progressBar.addEventListener('mousemove', this.mouseMoveCallback);
     this.showThumbnailHolder();
@@ -275,7 +262,7 @@ var VttThumbnailsPlugin = function () {
   };
 
   VttThumbnailsPlugin.prototype.processVtt = function processVtt(data) {
-    var _this6 = this;
+    var _this5 = this;
 
     var processedVtts = [];
     var vttDefinitions = data.split(/[\r\n][\r\n]/i);
@@ -288,11 +275,11 @@ var VttThumbnailsPlugin = function () {
         var vttTimeStart = vttTimingSplit[0];
         var vttTimeEnd = vttTimingSplit[1];
         var vttImageDef = vttDefSplit[1];
-        var vttCssDef = _this6.getVttCss(vttImageDef);
+        var vttCssDef = _this5.getVttCss(vttImageDef);
 
         processedVtts.push({
-          start: _this6.getSecondsFromTimestamp(vttTimeStart),
-          end: _this6.getSecondsFromTimestamp(vttTimeEnd),
+          start: _this5.getSecondsFromTimestamp(vttTimeStart),
+          end: _this5.getSecondsFromTimestamp(vttTimeEnd),
           css: vttCssDef
         });
       }
@@ -447,10 +434,10 @@ var onPlayerReady = function onPlayerReady(player, options) {
  *           An object of options left to the plugin author to define.
  */
 var vttThumbnails = function vttThumbnails(options) {
-  var _this7 = this;
+  var _this6 = this;
 
   this.ready(function () {
-    onPlayerReady(_this7, videojs.mergeOptions(defaults, options));
+    onPlayerReady(_this6, videojs.mergeOptions(defaults, options));
   });
 };
 
