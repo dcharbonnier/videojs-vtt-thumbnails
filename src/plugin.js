@@ -47,12 +47,12 @@ class VttThumbnailsPlugin {
 
   resetPlugin() {
     this.progressBar.removeEventListener('mouseenter', () => {
-      return this.onBarMouseenter();
+      return this.onBarMouseEnter();
     });
     this.progressBar.removeEventListener('mouseleave', () => {
-      return this.onBarMouseleave();
+      return this.onBarMouseLeave();
     });
-    this.progressBar.removeEventListener('mousemove', this.onBarMousemove);
+    this.progressBar.removeEventListener('mousemove', this.onBarMouseMove);
     delete this.progressBar;
     delete this.vttData;
     delete this.thumbnailHolder;
@@ -124,27 +124,27 @@ class VttThumbnailsPlugin {
     mouseDisplay.classList.add('vjs-hidden');
 
     this.progressBar.addEventListener('mouseenter', () => {
-      return this.onBarMouseenter();
+      return this.onBarMouseEnter();
     });
     this.progressBar.addEventListener('mouseleave', () => {
-      return this.onBarMouseleave();
+      return this.onBarMouseLeave();
     });
   }
 
-  onBarMouseenter() {
+  onBarMouseEnter() {
     this.mouseMoveCallback = (e) => {
-      this.onBarMousemove(e);
+      this.onBarMouseMove(e);
     };
     this.progressBar.addEventListener('mousemove', this.mouseMoveCallback);
     this.showThumbnailHolder();
   }
 
-  onBarMouseleave() {
+  onBarMouseLeave() {
     this.progressBar.removeEventListener('mousemove', this.mouseMoveCallback);
     this.hideThumbnailHolder();
   }
 
-  onBarMousemove(event) {
+  onBarMouseMove(event) {
     this.updateThumbnailStyle(
       videojs.dom.getPointerPosition(this.progressBar, event).x,
       this.progressBar.offsetWidth
