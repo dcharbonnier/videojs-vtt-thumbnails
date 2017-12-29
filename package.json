@@ -13,7 +13,6 @@
   },
   "scripts": {
     "prebuild": "npm run clean",
-    "install": "npm run build",
     "build": "npm-run-all -p build:*",
     "build:css": "npm-run-all build:css:sass build:css:bannerize",
     "build:css:bannerize": "bannerize dist/videojs-vtt-thumbnails.css --banner=scripts/banner.ejs",
