@@ -1,7 +1,7 @@
 /**
  * videojs-vtt-thumbnails
  * @version 0.0.3
- * @copyright 2017 Chris Boustead <chris@forgemotion.com>
+ * @copyright 2018 Chris Boustead <chris@forgemotion.com>
  * @license MIT
  */
 (function (global, factory) {
